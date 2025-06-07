@@ -1,8 +1,11 @@
-const Header: React.FC = () => {
+import styles from "./Header.module.css"
+
+const Header = () => {
   return (
-    <header className="header">
-      <h1>Post Assistant</h1>
-    </header>
+    <div className={styles.container}>
+      <h1 className={styles.h1}>Post Assistant</h1>
+      <h1 className={styles.h1}>MENU</h1>
+    </div>
   );
 };
 

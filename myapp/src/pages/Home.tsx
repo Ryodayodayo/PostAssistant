@@ -1,12 +1,19 @@
 import Header from '../components/Header';
+import TemplateList from '../components/TemplateList';
 import TemplateEditor from '../components/TemplateEditor';
+import styles from './Home.module.css'
 export const Home  = () => {
   return (
     <div>
         <Header />
-        <h1>Home</h1>
-        <h2>テンプレート一覧</h2>
-        <TemplateEditor />
+        <div  className = {styles.home}>
+          <div className = {styles.container}>
+            <TemplateList />
+          </div>
+          <div className = {styles.container}>
+            <TemplateEditor />
+          </div>
+        </div>
     </div>
   );
 };
