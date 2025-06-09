@@ -2,7 +2,8 @@ import Header from '../components/Header';
 import TemplateList from '../components/TemplateList';
 import TemplateEditor from '../components/TemplateEditor';
 import styles from './Home.module.css'
-export const Home  = () => {
+
+const Home  = () => {
   return (
     <div>
         <Header />
@@ -17,3 +18,5 @@ export const Home  = () => {
     </div>
   );
 };
+
+export default Home ;
