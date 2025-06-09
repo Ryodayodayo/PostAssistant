@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import styles from './LoginForm.module.css'
 
 const LoginForm = () => {
     const [id, setId] = useState("");
@@ -6,48 +7,40 @@ const LoginForm = () => {
 
     const[idError, setIdError] = useState("");
     const[passwordError, setPasswordError] = useState("");
+    const[keyError, setKeyError] = useState("");
 
     const[isLoading, setIsLoading] = useState(false)
 
-    //IDチェック関数
-    const isValidId = (id : string) => {
-        if (id == "a") {
-            return "401";
-        }
-    };
+    // IDの入力処理
+    const handleIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setId(e.target.value);
+        if (idError) setIdError(""); 
+        if (keyError) setKeyError(""); 
+    }
 
-    //パスワードチェック関数
-    const isValidPassword = (password : string) => {
-        if (password == "b") {
-            return "401";
-        }
+    // パスワードの入力処理
+    const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setPassword(e.target.value);
+        if (passwordError) setPasswordError(""); 
+        if (keyError) setKeyError(""); 
     };
 
 
     const handleLogin = async () => {
-        console.log('ID', id);
-        console.log('password', password);
-
         // エラーチェック
         let hasError = false;
 
         if (!id) {
             setIdError ("IDを入力してください");
             hasError = true ;
-        } else if (!isValidId (id)) {
-            setIdError ("正しいIDを入力してください");
-            hasError = true ;
-        }
+        } 
 
         if (!password) {
             setPasswordError ("パスワードを入力してください");
             hasError = true ;
-        } else if (!isValidPassword (password)) {
-            setPasswordError ("正しいパスワードを入力してください");
-            hasError = true ;
-        }
+        } 
 
-        // エラーがある時はreturn
+        // 空欄がある時はreturn
         if (hasError) {
             return ;
         }
@@ -56,10 +49,27 @@ const LoginForm = () => {
         setIsLoading (true);
 
         try {
-            await new Promise(resolve => setTimeout(resolve, 2000));
-            alert ("ログイン成功")
+            const response = await fetch('http://127.0.0.1:8787/api/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ id, password })
+            })
+
+            const data = await response.json();
+
+
+
+            if (data.success) {
+                alert (`ログイン成功   ID:${data.userId}`)
+            } else {
+                setKeyError(data.message); //IDかパスワードが間違ってたらエラーメッセージを格納
+            }
+            console.log(response.status);
+
         } catch {
-            alert ("ログイン失敗")
+            alert ("通信エラー")
         } finally {
             setIsLoading (false);
         }
@@ -69,41 +79,43 @@ const LoginForm = () => {
         <div>
             <h1>ログイン</h1>
 
-            <div className = "id">
-                <label>ID</label>
+            <div className = {styles.container}>
                 <input
-                    className = "Form"
+                    className = {styles.field}
                     value = {id}
-                    onChange = {(e: React.ChangeEvent<HTMLInputElement>) => setId(e.target.value)} 
-                    placeholder = "Your ID"
+                    onChange = {handleIdChange} 
+                    placeholder = "ID"
                     disabled={isLoading}
                  />
+                 {idError &&(
+                    <p className={styles.errorMessage}>{idError}</p>
+                 )}
             </div>
-            {idError && (
-                <p className="text-red-500">{idError}</p>
-            )}
 
-            <div className = "password">
-                <label>password</label>
+            <div className = {styles.container}>
                 <input
-                    className = "Form"
+                    className = {styles.field}
                     value = {password}
-                    onChange = {(e: React.ChangeEvent<HTMLInputElement> ) =>setPassword(e.target.value)}
+                    onChange = {handlePasswordChange}
                     placeholder = "password"
                     disabled={isLoading}
                 />
-            {passwordError && (
-                <p className="text-red-500">{passwordError}</p>
-            )}
+                {passwordError &&(
+                    <p className={styles.errorMessage}>{passwordError}</p>
+                )}
             </div>
+
+            {keyError && (
+                <p className={styles.errorMessage}>{keyError}</p>
+            )}
 
             <button 
             onClick={handleLogin} 
-            className = "button"
+            className = {styles.button}
             disabled={isLoading}
             >
                 {isLoading ? (
-                    <div className="flex items-center justify-center">
+                    <div >
                         ログイン中...
                     </div>
                 ) : (
