@@ -1,14 +1,35 @@
-.field {
-    white-space: pre-wrap;
-    resize: none;         
-    width: 100%;          
-    height: 100px;  
-}
-
-.result {
-    white-space: pre-wrap;
+.resultField {
     resize: none;         
     width: 100%;          
     height: 100px;        
 
+}
+
+.templateEditField {
+    width: 100%;
+    height:100px;
+    resize:none;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;    
+}
+
+.editField {
+    width : 100% ;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid   #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.variables {
+    display: flex;
+    flex-direction: column;
+}
+
+.variableName {
+    font-size: 20px;
 }
