@@ -76,10 +76,10 @@ const LoginForm = () => {
     };
 
     return (
-        <div>
+        <div className = {styles.container}>
             <h1>ログイン</h1>
 
-            <div className = {styles.container}>
+            <div>
                 <input
                     className = {styles.field}
                     value = {id}
@@ -92,7 +92,7 @@ const LoginForm = () => {
                  )}
             </div>
 
-            <div className = {styles.container}>
+            <div>
                 <input
                     className = {styles.field}
                     value = {password}
