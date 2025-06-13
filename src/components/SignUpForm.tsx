@@ -4,7 +4,7 @@ import { createUserWithEmailAndPassword } from 'firebase/auth';
 
 
 
-const SignUp = () => {
+const SignUpForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -17,8 +17,8 @@ const SignUp = () => {
     }
 
     try {
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    console.log('登録成功:', userCredential.user);
+    const userInformation = await createUserWithEmailAndPassword(auth, email, password);
+    console.log('登録成功:', userInformation.user);
     } catch (error) {
     console.error('登録エラー:', error);
     }
@@ -35,7 +35,7 @@ const SignUp = () => {
 
   return (
     <div>
-      <h1>ユーザ登録 </h1>
+      <h1>ユーザー登録 </h1>
       <form onSubmit={handleSubmit}>
         <div>
           <label>メールアドレス</label>
@@ -65,4 +65,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default SignUpForm;

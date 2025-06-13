@@ -1,7 +1,8 @@
 import Header from '../components/Header';
-import SighUp from '../components/SignUp';
+import SighUp from '../components/SignUpForm';
 import TemplateList from '../components/TemplateList';
 import TemplateEditor from '../components/TemplateEditor';
+import LogOut from '../components/LogOut';
 import styles from './Home.module.css'
 
 const Home  = () => {
@@ -9,13 +10,11 @@ const Home  = () => {
     <div>
         <Header />
         <div  className = {styles.home}>
-          <SighUp />
           <div className = {styles.container}>
             <TemplateList />
-          </div>
-          <div className = {styles.container}>
             <TemplateEditor />
           </div>
+          <LogOut />
         </div>
     </div>
   );

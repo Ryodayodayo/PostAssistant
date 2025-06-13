@@ -1,8 +1,67 @@
 import React, { useState } from 'react';
+import { auth } from '../firebase';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { Link } from 'react-router-dom';
 import styles from './LoginForm.module.css'
 
+
+const Login = () => {
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const handleSubmit = (event : React.FormEvent) => {
+        event.preventDefault();
+        signInWithEmailAndPassword(auth, email, password);
+        };
+
+    const handleChangeEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setEmail(event.currentTarget.value);
+    };
+
+    const handleChangePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setPassword(event.currentTarget.value);
+    };
+
+  return (
+    <div className = {styles.container}>
+      <h1>ログイン</h1>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>メールアドレス</label>
+          <input 
+          name="email" 
+          type="email" 
+          className = {styles.field}
+          placeholder="email" 
+          onChange={(event) => handleChangeEmail(event)}/>
+        </div>
+        <div>
+          <label>パスワード</label>
+          <input 
+          name="password" 
+          type="password" 
+          className = {styles.field}
+          placeholder="password" 
+          onChange={(event) => handleChangePassword(event)}/>
+        </div>
+        <div>
+          <button className = {styles.button}>ログイン</button>
+        </div>
+        <div>
+          ユーザ登録は<Link to={'/signup'}>こちら</Link>
+        </div>
+      </form>
+    </div>
+  );
+};
+
+export default Login;
+
+
+/*
 const LoginForm = () => {
-    const [id, setId] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState(""); 
 
     const[idError, setIdError] = useState("");
@@ -13,7 +72,7 @@ const LoginForm = () => {
 
     // IDの入力処理
     const handleIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setId(e.target.value);
+        setEmail(e.target.value);
         if (idError) setIdError(""); 
         if (keyError) setKeyError(""); 
     }
@@ -30,7 +89,7 @@ const LoginForm = () => {
         // エラーチェック
         let hasError = false;
 
-        if (!id) {
+        if (!email) {
             setIdError ("IDを入力してください");
             hasError = true ;
         } 
@@ -54,7 +113,7 @@ const LoginForm = () => {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ id, password })
+                body: JSON.stringify({ id: email, password })
             })
 
             const data = await response.json();
@@ -82,7 +141,7 @@ const LoginForm = () => {
             <div>
                 <input
                     className = {styles.field}
-                    value = {id}
+                    value = {email}
                     onChange = {handleIdChange} 
                     placeholder = "ID"
                     disabled={isLoading}
@@ -130,3 +189,4 @@ const LoginForm = () => {
 };
 
 export default LoginForm;
+*/
