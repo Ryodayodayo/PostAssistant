@@ -1,45 +1,42 @@
-import React, { createContext, useState, useEffect, useContext } from 'react';
-import { onAuthStateChanged, User } from 'firebase/auth';
+import { createContext, useState, useContext, useEffect, ReactNode } from 'react';
+import { User } from 'firebase/auth';
 import { auth } from '../firebase';
 
+// Context の型定義
 interface AuthContextType {
   user: User | null;
-  loading: boolean;
 }
 
-const AuthContext = createContext<AuthContextType | null>(null);
-
-export function useAuth() {
-  const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error("useAuth must be used within an AuthProvider");
-  }
-  return context;
+// AuthProviderのpropsの型定義
+interface AuthProviderProps {
+  children: ReactNode;
 }
 
-// ステップ4：従業員
-export function AuthProvider({ children }: { children: React.ReactNode }) {
+
+const AuthContext = createContext<AuthContextType | undefined>(undefined); //contextを作る
+
+export function useAuthContext() { //作ったcontextを使えるようにする
+  return useContext(AuthContext); 
+}
+
+export function AuthProvider({ children } : AuthProviderProps) { 
   const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
 
-  // ステップ5：見張り番
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-      setLoading(false);
-    });
-    return unsubscribe;
-  }, []);
-
-  // ステップ6：データを入れて配る
-  const value = {
-    user,
-    loading,
+  const value: AuthContextType = {
+    user
   };
 
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
-  );
+  useEffect(() => {
+    const unsubscribed = auth.onAuthStateChanged((user: User | null) => {
+      console.log(user);
+      setUser(user);
+    });
+
+    return () => {
+      unsubscribed();
+    };
+  }, []);
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;  //AuthContextのproviderで{value}を{children}に提供する
 }
+
