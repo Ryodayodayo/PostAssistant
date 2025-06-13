@@ -5,6 +5,7 @@ import { auth } from '../firebase';
 // Context の型定義
 interface AuthContextType {
   user: User | null;
+  loading : boolean;
 }
 
 // AuthProviderのpropsの型定義
@@ -16,20 +17,27 @@ interface AuthProviderProps {
 const AuthContext = createContext<AuthContextType | undefined>(undefined); //contextを作る
 
 export function useAuthContext() { //作ったcontextを使えるようにする
-  return useContext(AuthContext); 
+    const context = useContext(AuthContext); 
+    if (context === undefined) {
+    throw new Error('useAuthContext must be used within an AuthProvider');
+  }
+  return context;
 }
 
 export function AuthProvider({ children } : AuthProviderProps) { 
   const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
 
   const value: AuthContextType = {
-    user
+    user,
+    loading
   };
 
   useEffect(() => {
     const unsubscribed = auth.onAuthStateChanged((user: User | null) => {
       console.log(user);
       setUser(user);
+      setLoading(false);
     });
 
     return () => {

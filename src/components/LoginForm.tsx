@@ -9,11 +9,31 @@ const Login = () => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
 
-    const handleSubmit = (event : React.FormEvent) => {
+    const handleSubmit = async (event : React.FormEvent) => {
         event.preventDefault();
-        signInWithEmailAndPassword(auth, email, password);
-        };
+
+        if (!email || !password) {
+            setError("メールアドレスとパスワードを入力してください");
+            return;
+        }
+        setLoading(true);
+        setError('');
+
+        try {
+            await signInWithEmailAndPassword(auth, email, password);
+            console.log("ログイン成功");
+
+        } catch (error: any) {
+            console.error("ログインエラー:", error);
+            setError("ログインに失敗しました。メールアドレスとパスワードを確認してください。");
+        } finally {
+            setLoading(false);
+        }
+    };
+
 
     const handleChangeEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
         setEmail(event.currentTarget.value);
@@ -33,8 +53,11 @@ const Login = () => {
           name="email" 
           type="email" 
           className = {styles.field}
+          value={email}
           placeholder="email" 
+          disabled={loading}
           onChange={(event) => handleChangeEmail(event)}/>
+          
         </div>
         <div>
           <label>パスワード</label>
@@ -43,10 +66,17 @@ const Login = () => {
           type="password" 
           className = {styles.field}
           placeholder="password" 
+          value={password} 
+          disabled={loading}
           onChange={(event) => handleChangePassword(event)}/>
         </div>
+
+        {error && <p className={styles.errorMessage}>{error}</p>}
+
         <div>
-          <button className = {styles.button}>ログイン</button>
+            <button className = {styles.button}>
+                {loading ? 'ログイン中...' : 'ログイン'}
+            </button>
         </div>
         <div>
           ユーザ登録は<Link to={'/signup'}>こちら</Link>

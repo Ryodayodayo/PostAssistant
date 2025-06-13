@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import ProtectRouter from './components/ProtectRouter';
 import Home from './pages/Home';
 import Login from './pages/Login' ;
 import SignUp from './pages/SignUp';
@@ -11,7 +12,11 @@ function App() {
     <AuthProvider>
       <BrowserRouter>
         <Routes>
-          <Route path = "/" element = {<Home />}/>
+          <Route path = "/" element = {
+          <ProtectRouter>
+            {<Home />}
+          </ProtectRouter>
+          }/>
           <Route path = "/signup" element = {<SignUp />}/>
           <Route path="/login" element={<Login />} />
         </Routes>
