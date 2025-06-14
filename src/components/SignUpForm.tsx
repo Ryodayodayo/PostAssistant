@@ -1,6 +1,7 @@
 import { ChangeEvent, useState } from 'react';
 import { auth } from '../firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+import styles from './LoginForm.module.css';
 
 
 
@@ -34,34 +35,37 @@ const SignUpForm = () => {
   };
 
   return (
-    <div>
-      <h1>ユーザー登録 </h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>メールアドレス</label>
-          <input
-            name="email"
-            type="email"
-            placeholder="email"
-            value={email}
-            onChange={(event) => handleChangeEmail(event)}
-          />
-        </div>
-        <div>
-          <label>パスワード</label>
-          <input
-            name="password"
-            type="password"
-            placeholder="password"
-            value={password}
-            onChange={(event) => handleChangePassword(event)}
-          />
-        </div>
-        <div>
-          <button>登録</button>
-        </div>
-      </form>
+    <div className = {styles.page}>
+      <div className = {styles.container}>
+        <h1 className = {styles.h1}>ユーザー登録 </h1>
+        <form onSubmit={handleSubmit} className = {styles.form}>
+          <div>
+            <label className = {styles.label}>メールアドレス</label>
+            <input
+              name="email"
+              type="email"
+              className = {styles.field}
+              placeholder="email"
+              value={email}
+              onChange={(event) => handleChangeEmail(event)}
+            />
+          </div>
+          <div>
+            <label className = {styles.label}>パスワード</label>
+            <input
+              name="password"
+              type="password"
+              className = {styles.field}
+              placeholder="password"
+              value={password}
+              onChange={(event) => handleChangePassword(event)}
+            />
+          </div>
+          <button className = {styles.button}>登録</button>
+        </form>
+      </div>
     </div>
+    
   );
 };
 

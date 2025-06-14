@@ -4,11 +4,8 @@ import styles from "./SignUp.module.css"
 
 const SignUp  = () => {
   return (
-    <div>
-      <Header />
-        <div className = {styles.container}>
-          <SignUpForm />
-        </div>
+    <div className={styles.container}>
+      <SignUpForm />
     </div>
   );
 };

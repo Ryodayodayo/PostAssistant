@@ -7,18 +7,15 @@ import Home from './pages/Home';
 import Login from './pages/Login' ;
 import SignUp from './pages/SignUp';
 import { AuthProvider } from './contexts/AuthContext';
+import Header from './components/Header';
 
 function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
-
+        <Header />
         <Routes>
-          <Route path = "/" element = {
-          <ProtectRoute>
-            <Home />
-          </ProtectRoute>
-          }/>
+          <Route path = "/" element = {<Home />}/>
 
           <Route path = "/signup" element = {
             <PublicRoute>

@@ -7,15 +7,11 @@ import styles from './Home.module.css'
 
 const Home  = () => {
   return (
-    <div>
-        <Header />
-        <div  className = {styles.home}>
-          <div className = {styles.container}>
-            <TemplateList />
-            <TemplateEditor />
-          </div>
-          <LogOut />
-        </div>
+    <div className = {styles.home}>
+      <div className = {styles.container}>
+        <TemplateList />
+        <TemplateEditor />
+      </div>
     </div>
   );
 };

@@ -44,44 +44,41 @@ const Login = () => {
     };
 
   return (
-    <div className = {styles.container}>
-      <h1>ログイン</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>メールアドレス</label>
-          <input 
-          name="email" 
-          type="email" 
-          className = {styles.field}
-          value={email}
-          placeholder="email" 
-          disabled={loading}
-          onChange={(event) => handleChangeEmail(event)}/>
-          
-        </div>
-        <div>
-          <label>パスワード</label>
-          <input 
-          name="password" 
-          type="password" 
-          className = {styles.field}
-          placeholder="password" 
-          value={password} 
-          disabled={loading}
-          onChange={(event) => handleChangePassword(event)}/>
-        </div>
+    <div className = {styles.page}>
+        <div className = {styles.container}>
+            <h1 className = {styles.h1}>ログイン</h1>
+            <form onSubmit={handleSubmit} className = {styles.form}>
+                <div>
+                <label className = {styles.label}>メールアドレス</label>
+                <input 
+                name="email" 
+                type="email" 
+                className = {styles.field}
+                value={email}
+                placeholder="email" 
+                disabled={loading}
+                onChange={(event) => handleChangeEmail(event)}/>
+                
+                </div>
+                <div>
+                <label className = {styles.label}>パスワード</label>
+                <input 
+                name="password" 
+                type="password" 
+                className = {styles.field}
+                placeholder="password" 
+                value={password} 
+                disabled={loading}
+                onChange={(event) => handleChangePassword(event)}/>
+                </div>
 
-        {error && <p className={styles.errorMessage}>{error}</p>}
+                {error && <p className={styles.errorMessage}>{error}</p>}
 
-        <div>
-            <button className = {styles.button}>
-                {loading ? 'ログイン中...' : 'ログイン'}
-            </button>
+                <button className = {styles.button}>
+                    {loading ? 'ログイン中...' : 'ログイン'}
+                </button>
+            </form>
         </div>
-        <div>
-          ユーザ登録は<Link to={'/signup'}>こちら</Link>
-        </div>
-      </form>
     </div>
   );
 };

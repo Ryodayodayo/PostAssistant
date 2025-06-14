@@ -1,14 +1,34 @@
-.title {
-    display: flex ; 
-    justify-content: center;
-}
-
 .home {
-    display : flex ;
-    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 水平方向の中央寄せ */
+    background-color: #f5f5f5
 }
 
 .container {
+    padding: 20px;
+    margin: 20px;
     display: flex;
-    margin : 20px;
+    justify-content: center; 
+    gap: 20px;
+    width: 100%;
+    max-width: 800px; /* 最大幅を制限 */
+}
+
+/* 左側のTemplateList */
+.container > :first-child {
+    background-color: white;
+    border-radius: 12px; /*角を丸くする*/
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /*影を付ける*/
+    padding: 20px;
+    flex: 0 0 200px; /* 固定幅200px */
+}
+
+/* 右側のTemplateEditor */
+.container > :last-child {
+    background-color: white;
+    border-radius: 12px; /*角を丸くする*/
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /*影を付ける*/
+    padding: 20px;
+    flex: 1; /* 残りのスペースを全て使用 */
 }
