@@ -8,7 +8,7 @@ interface ProtectedRouteProps {
 }
 
 
-const ProtectRouter = ( { children } : ProtectedRouteProps) => {
+const ProtectRoute = ( { children } : ProtectedRouteProps) => {
   const { user, loading } = useAuthContext();
 
   if (loading) return <div>Loading...</div>;
@@ -17,4 +17,4 @@ const ProtectRouter = ( { children } : ProtectedRouteProps) => {
   return <>{children}</>;
 };
 
-export default ProtectRouter;
+export default ProtectRoute;
