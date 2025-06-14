@@ -1,6 +1,8 @@
 import { ChangeEvent, useState } from 'react';
-import { auth } from '../firebase';
+import { auth, db } from '../firebase';
+import { doc, setDoc, serverTimestamp} from "firebase/firestore";
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { FirebaseError } from "firebase/app";
 import styles from './LoginForm.module.css';
 
 
@@ -19,9 +21,18 @@ const SignUpForm = () => {
 
     try {
     const userInformation = await createUserWithEmailAndPassword(auth, email, password);
+    const user = userInformation.user;
     console.log('登録成功:', userInformation.user);
     alert ("ユーザー情報が登録されました");
+    await setDoc(doc(db, "users", user.uid), {
+    uid: user.uid,
+    email: user.email,
+    createdAt: serverTimestamp()
+  });
+    console.log("データベースに登録完了");
+
     } catch (error) {
+
     console.error('登録エラー:', error);
     alert ("登録できません");
     }

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore'
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore'
 import { useAuthContext } from '../contexts/AuthContext'
 import { db, auth } from '../firebase'
 import styles from './TemplateSaver.module.css'
@@ -37,7 +37,7 @@ const TemplateSaver = ({ template, onSaveSuccess } : TemplateSaverProps) => {
 
     try {
       // Firestoreにテンプレートを保存
-      await addDoc(collection(db, 'templates'), {
+      await addDoc(collection(db, "users", user.uid, "templates"), {
         name: templateName.trim(),
         content: template,
         userId: user.uid,
