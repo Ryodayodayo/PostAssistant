@@ -15,12 +15,13 @@ const Header = () => {
 
   const goToLogin = () => navigate("/login");
   const goToSignup = () => navigate("/signup");
+  const goToHome = () => navigate("/");
 
   if (loading) return null;
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.h1}>Post Assistant</h1>
+      <h1 className={styles.h1} onClick={goToHome}>Post Assistant</h1>
       <div className={styles.buttons}>
         {user ? (
           <button onClick={handleLogout}>ログアウト</button>
