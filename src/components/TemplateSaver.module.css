@@ -1,0 +1,91 @@
+.saveButton {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.saveButton:hover{
+    opacity: 0.8;
+}
+
+.modal {
+    position: fixed;
+    inset: 0;
+    margin: auto;
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    z-index: 2;
+    height: 300px;
+    width: 400px;
+}
+
+.preview {
+  margin-top: 20px;
+}
+
+.templatePreview {
+  background-color: #f9f9f9;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: small;
+  overflow: auto;
+}
+
+.container {
+  margin-top: 20px;
+}
+
+.nameInput {
+  width: 100%;
+  padding: 8px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-top: 5px;
+}
+
+.buttons {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.confirmButton {
+  background-color: #007bff;
+  color: white;
+  padding: 8px 16px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.confirmButton:hover {
+    opacity: 0.9;
+}
+
+.confirmButton:disabled {
+  background-color: #aaa;
+  cursor: not-allowed;
+}
+
+.cancelButton {
+  background-color: #ddd;
+  color: black;
+  padding: 8px 16px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.cancelButton:hover {
+  background-color: #bbb;
+}

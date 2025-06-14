@@ -30,6 +30,29 @@
     flex-direction: column;
 }
 
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.button {
+    width: 30%;
+    margin: 10px;
+    padding: 6px;
+    background-color: #1e90ff;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.button:hover {
+    opacity:0.8;
+}
+
+
 .variableName {
     font-size: 20px;
 }

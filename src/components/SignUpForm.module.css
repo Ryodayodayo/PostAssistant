@@ -57,7 +57,7 @@
 }
 
 .button:hover {
-    background-color: #0f75d4;
+    opacity:0.8;
 }
 
 .errorMessage {

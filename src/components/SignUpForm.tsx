@@ -20,10 +20,11 @@ const SignUpForm = () => {
     try {
     const userInformation = await createUserWithEmailAndPassword(auth, email, password);
     console.log('登録成功:', userInformation.user);
+    alert ("ユーザー情報が登録されました");
     } catch (error) {
     console.error('登録エラー:', error);
+    alert ("登録できません");
     }
-
   };
 
   

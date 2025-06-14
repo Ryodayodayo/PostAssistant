@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import TemplateSaver from './TemplateSaver';
 import styles from './TemplateEditor.module.css'
 
 const TemplateEditor  = () => {
@@ -105,10 +106,15 @@ const TemplateEditor  = () => {
           value={result}
           onChange={(e) => setResult(e.target.value)}
         />
-        <br />
-        <button onClick={() => navigator.clipboard.writeText(result)}>結果をコピー</button>
-
-
+        <div className  = {styles.buttons}>
+          <button onClick={() => navigator.clipboard.writeText(result)} className = {styles.button}>結果をコピー</button>
+          <TemplateSaver 
+            template={template}
+            onSaveSuccess={() => {
+              console.log('テンプレートが保存されました')
+            }}
+          />
+        </div>
     </div>
   );
 };

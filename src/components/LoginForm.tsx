@@ -25,6 +25,7 @@ const Login = () => {
         try {
             await signInWithEmailAndPassword(auth, email, password);
             console.log("ログイン成功");
+            alert ("ログインしました");
 
         } catch (error: any) {
             console.error("ログインエラー:", error);
