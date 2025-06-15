@@ -23,6 +23,12 @@ const Home  = () => {
     console.log('テンプレートが選択されました:', template.name);
   };
 
+  const handleNewTemplate = () => {
+    setSelectedTemplateContent("");
+    setSelectedTemplateName("");
+    console.log('テンプレートがクリアされました');
+  }
+
 
   return (
     <div className = {styles.home}>
@@ -31,8 +37,8 @@ const Home  = () => {
         <TemplateEditor 
           selectedTemplate={selectedTemplateContent} 
           selectedTemplateName={selectedTemplateName}
-          onClearTemplate={() => setSelectedTemplateName("")}/>
-          
+          onClearTemplate={handleNewTemplate}/>
+
       </div>
     </div>
   );

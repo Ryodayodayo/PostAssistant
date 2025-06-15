@@ -77,9 +77,9 @@ const TemplateEditor  = ({ selectedTemplate, selectedTemplateName, onClearTempla
     }, [template, fields])
 
     const handleNewTemplate = () => {
-        setTemplate(""); //templateの中身を初期化
-        setFields({}); // フィールドをリセット
         onClearTemplate?.();
+        setTemplate("");
+        setFields({}); // フィールドをリセット
     };
 
 

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { doc, getDocs, collection, query, where } from 'firebase/firestore';
+import { doc, deleteDoc, getDocs, collection, query, where } from 'firebase/firestore';
 import { useAuthContext } from '../contexts/AuthContext'
 import { db, auth } from '../firebase'
 import styles from "./TemplateList.module.css"
@@ -60,11 +60,31 @@ const TemplateList = ({ onTemplateSelect }: TemplateListProps) => {
     fetchUserTemplates();
   }, [user]);
 
-    const handleTemplateSelect = (template: Template) => {
+  const handleTemplateSelect = (template: Template) => {
     console.log('選択されたテンプレート:', template);
     onTemplateSelect(template); // 親コンポーネントに選択されたテンプレートを渡す
   };
 
+
+const handleTemplateDelete = async (template: Template) => {
+  if (!user) {
+    return;
+  }
+
+  try {
+    setLoading(true);
+    
+    // テンプレートのドキュメントを削除
+    await deleteDoc(doc(db, "users", user.uid, "templates", template.id));
+    
+    console.log('テンプレートが削除されました:', template.name);
+    
+  } catch (err) {
+    console.error('テンプレートの削除に失敗しました:', err);
+  } finally {
+    setLoading(false);
+  }
+}
 
   return (
     <div className = {styles.container}>
@@ -81,7 +101,16 @@ const TemplateList = ({ onTemplateSelect }: TemplateListProps) => {
           {userTemplates.map((template) => (
             <div className={styles.templateItem} onClick={() => handleTemplateSelect(template)}>
               {template.name}
+              <button 
+              className={styles.deleteButton}
+              onClick={(e) => {
+              e.stopPropagation(); // 親要素のクリックイベントを防ぐ
+              handleTemplateDelete(template);
+              }}>
+              削除
+              </button>
             </div>
+
           ))}
         </div>
       )}
