@@ -2,7 +2,14 @@ import { useState, useEffect } from 'react'
 import TemplateSaver from './TemplateSaver';
 import styles from './TemplateEditor.module.css'
 
-const TemplateEditor  = () => {
+interface TemplateEditorProps {
+  selectedTemplate?: string; // 選択されたテンプレートのcontent
+  selectedTemplateName?: string //選択されたテンプレートのname
+  onClearTemplate?: () => void;
+}
+
+
+const TemplateEditor  = ({ selectedTemplate, selectedTemplateName, onClearTemplate}: TemplateEditorProps) => {
 
     //状態管理
     const [template, setTemplate] = useState("曲のタイトルは\"{title}\"で、作者は\"{author}\"です")
@@ -38,6 +45,15 @@ const TemplateEditor  = () => {
       return result
     }
 
+      // 選択されたテンプレートが変更されたときの処理
+    useEffect(() => {
+      if (selectedTemplate) {
+        setTemplate(selectedTemplate);
+        // フィールドをリセット
+        setFields({});
+      }
+    }, [selectedTemplate]);
+
     //テンプレート変更時に、新しい変数が存在したら新しくフィールドオブジェクトを作る
     useEffect(() => {
       //新しい変数を見つける
@@ -60,14 +76,26 @@ const TemplateEditor  = () => {
       setResult(fillTemplate(template, fields))
     }, [template, fields])
 
+    const handleNewTemplate = () => {
+        setTemplate(""); //templateの中身を初期化
+        setFields({}); // フィールドをリセット
+        onClearTemplate?.();
+    };
+
 
     const variables = findVariables(template) //variables配列を最初に作成
 
 
   return (
     <div>
-      <div>
-        <h2>テンプレートを入力</h2>
+      <div className = {styles.tops}>
+        <h2>
+          {selectedTemplateName ? `編集中: ${selectedTemplateName}` : '新規作成'}
+        </h2>
+
+        <button onClick = {handleNewTemplate} className = {styles.button}>新規作成</button>
+      </div>  
+
         <p>
           変数は {`{変数名}`} の形式で書いてください
         </p>
@@ -77,7 +105,7 @@ const TemplateEditor  = () => {
           onChange={(e) => setTemplate(e.target.value)}
           placeholder="例: 今日の曲は{title}で、作者は{author}です"
         />
-      </div>
+      
 
       {variables.length > 0 && (  //新しい変数が検出されると、UIに編集フィールドを作成する
         <div>
@@ -105,13 +133,14 @@ const TemplateEditor  = () => {
           className={styles.resultField}
           value={result}
           onChange={(e) => setResult(e.target.value)}
+          readOnly
         />
         <div className  = {styles.buttons}>
           <button onClick={() => navigator.clipboard.writeText(result)} className = {styles.button}>結果をコピー</button>
           <TemplateSaver 
             template={template}
             onSaveSuccess={() => {
-              console.log('テンプレートが保存されました')
+            console.log('テンプレートが保存されました')
             }}
           />
         </div>

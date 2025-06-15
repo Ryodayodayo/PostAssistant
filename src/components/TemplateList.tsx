@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { doc, getDocs, collection, query, where } from 'firebase/firestore';
 import { useAuthContext } from '../contexts/AuthContext'
 import { db, auth } from '../firebase'
+import styles from "./TemplateList.module.css"
 
 
 interface Template {
@@ -10,7 +11,11 @@ interface Template {
   content: string;
 }
 
-const TemplateList = () => {
+interface TemplateListProps {
+  onTemplateSelect: (template: Template) => void;
+}
+
+const TemplateList = ({ onTemplateSelect }: TemplateListProps) => {
   const { user } = useAuthContext()
   const [userTemplates, setUserTemplates] = useState<Template[]>([]);
   const [loading, setLoading] = useState(true);
@@ -18,6 +23,7 @@ const TemplateList = () => {
   useEffect(() => {
     const fetchUserTemplates = async () => {
       if (!user) {
+        setUserTemplates([]); // ログアウト時にテンプレートをクリア
         setLoading(false);
         return;
       }
@@ -54,8 +60,14 @@ const TemplateList = () => {
     fetchUserTemplates();
   }, [user]);
 
+    const handleTemplateSelect = (template: Template) => {
+    console.log('選択されたテンプレート:', template);
+    onTemplateSelect(template); // 親コンポーネントに選択されたテンプレートを渡す
+  };
+
+
   return (
-    <div>
+    <div className = {styles.container}>
       <h2>テンプレート一覧</h2>
 
       {loading && <p>読み込み中...</p>}
@@ -65,13 +77,13 @@ const TemplateList = () => {
       )}
       
       {!loading && userTemplates.length > 0 && (
-        <ul>
+        <div className={styles.templateList}>
           {userTemplates.map((template) => (
-            <li key={template.id}>
+            <div className={styles.templateItem} onClick={() => handleTemplateSelect(template)}>
               {template.name}
-            </li>
+            </div>
           ))}
-        </ul>
+        </div>
       )}
        
     </div>
