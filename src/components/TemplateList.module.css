@@ -10,6 +10,10 @@
 }
 
 .templateItem {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding: 12px 10px;
     border: 1px solid #e0e0e0;
     border-radius: 8px;
@@ -22,4 +26,54 @@
 .templateItem:hover {
     background-color: #f8f9fa;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.menuContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+
+.deleteButton {
+    margin-left: 12px;
+    padding: 4px 10px;
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.deleteButton:hover {
+  background-color: #c0392b;
+}
+
+.deleteTrigger {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: #888;
+    cursor: pointer;
+    padding: 0 6px;
+}
+
+.deleteTrigger:hover {
+    color: #e74c3c;
+}
+
+.deleteMenu {
+  position: absolute;
+  left: 100%;                 
+  top: 50%;                    
+  transform: translateY(-50%);  
+  margin-left: 8px;            
+  z-index: 10;
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  padding: 4px;
 }

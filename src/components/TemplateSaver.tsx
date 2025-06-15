@@ -50,10 +50,8 @@ const TemplateSaver = ({ template, onSaveSuccess } : TemplateSaverProps) => {
       setTemplateName('')
       setIsModalOpen(false)
       
-      // 保存成功時のコールバック（親コンポーネントでテンプレート一覧を更新するなど）
-      if (onSaveSuccess) {
-        onSaveSuccess()
-      }
+      window.location.reload();
+
     } catch (error) {
       console.error('テンプレートの保存に失敗しました:', error)
       alert('テンプレートの保存に失敗しました。もう一度お試しください。')
